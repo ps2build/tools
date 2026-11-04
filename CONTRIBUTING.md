@@ -1,25 +1,35 @@
-# Contributing
+# Contributing to tools
 
-## Workflow
+We want to make contributing to this project as easy and transparent as
+possible.
 
-1. Open an issue before adding a tool or changing a tool's command-line interface.
-2. Fork, branch from `main`, and keep each pull request to one change.
-3. Run `gofmt -l .`, `go vet ./...` and `go test ./...` before pushing; CI runs the same checks plus a license policy check.
-4. If `go.mod` changes, run `.github/scripts/generate-licenses.sh` and commit `licenses/`.
+## AI Usage Policy
 
-## Code style
+AI-generated code is allowed. What is not allowed is submitting code you do not
+understand. You are 100% responsible for every line, however it was produced,
+and must explicitly disclose the manner in which AI was employed.
 
-- Comments are single lines and only for tool, compiler or linker behavior that is not obvious from the code. Tests are documented by their names.
-- CLI help text states what a command accomplishes, not how it works internally.
+It is strictly prohibited to use AI to write your posts for you (bug reports,
+feature requests, pull request descriptions, GitHub discussions, responding to
+humans, ...).
 
-## AI-assisted contributions
+## Pull Requests
 
-AI-generated code is accepted. Contributions that the author cannot explain without AI assistance are discouraged and may be closed.
+- Search for existing pull requests first before creating one.
+- Open an issue first before adding a tool or changing a tool's command-line
+  interface.
+- Keep each pull request to one change.
+- CLI help text states what a command accomplishes, not how it works
+  internally.
+- Comments describe code that is necessarily complex. They are not an excuse
+  to write poorly written code.
 
-- State in the pull request which AI tool and model were used, or that none was.
-- Write the pull request description yourself, without AI.
-- You are responsible for every line you submit: be prepared to explain and defend each change in review.
+## Issues
+
+We use GitHub issues to track public bugs. Please ensure your description is
+clear and has sufficient instructions to be able to reproduce the issue.
 
 ## License
 
-By submitting a contribution, you agree that it is licensed under the same license as this repository (see [LICENSE](LICENSE)).
+By contributing to tools, you agree that your contributions will be licensed
+under the LICENSE file in the root directory of this source tree.
