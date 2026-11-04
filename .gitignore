@@ -1,0 +1,4 @@
+*.exe
+.clangd
+stub/build/
+stub/.cache/

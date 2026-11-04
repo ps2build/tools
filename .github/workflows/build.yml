@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Build
+        run: go build -v ./cmd/...
+      - name: Vet
+        run: go vet ./...
+      - name: Format
+        run: test -z "$(gofmt -l .)"
+      - name: Test
+        run: go test ./...
+
+      - name: Install go-licenses
+        run: |
+          go install github.com/google/go-licenses@v1.6.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Check license types
+        run: go-licenses check ./cmd/... --disallowed_types=forbidden,restricted,reciprocal,unknown
+
+      - name: Check licenses/ is up to date
+        run: |
+          cp -r licenses /tmp/licenses-committed
+          .github/scripts/generate-licenses.sh
+          if ! diff -rq /tmp/licenses-committed licenses; then
+            echo "licenses/ is out of date; run .github/scripts/generate-licenses.sh and commit the result" >&2
+            exit 1
+          fi

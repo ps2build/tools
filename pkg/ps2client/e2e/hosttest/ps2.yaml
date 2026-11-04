@@ -1,0 +1,8 @@
+project: hosttest
+
+targets:
+  - name: hosttest
+    type: ee
+    sources:
+      - main.c
+    libs: [debug]

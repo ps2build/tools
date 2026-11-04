@@ -1,0 +1,8 @@
+project: consoletest
+
+targets:
+  - name: consoletest
+    type: ee
+    sources:
+      - main.c
+    libs: [debug]

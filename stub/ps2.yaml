@@ -1,0 +1,26 @@
+project: ps2pack-stub
+
+targets:
+  - name: stub
+    type: ee
+    sources:
+      - crt0.s
+      - main.c
+      - lzma_alloc.c
+      - lzma/LzmaDec.c
+    cflags:
+      - -G0
+      - -ffreestanding
+      - -fno-builtin
+      - -fomit-frame-pointer
+      - -ffunction-sections
+      - -fdata-sections
+      - -DNDEBUG
+      - -D_7ZIP_ST
+    ldflags:
+      - -nostdlib
+      - -Wl,--build-id=none
+      - -Wl,--gc-sections
+    linkfile: linkfile
+    opt: -Os
+    output_bin: true

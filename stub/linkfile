@@ -1,0 +1,59 @@
+/*
+ * Linker script for the ps2pack stub. Deliberately minimal: no crt0, no
+ * libc, no C++ ctor/dtor support. Everything is linked flat at
+ * STUB_LINK_BASE (0x01D00000, matches PS2-PACKER-LITE-SPEC.md #4.1's
+ * default-layout stub address) so the stub's own code can use absolute
+ * addressing without relocation - ps2pack always re-solves the
+ * surrounding segment's placement so this fixed address is where the
+ * stub ends up at runtime, regardless of the packed program's size.
+ * See stub/crt0.s for the entry sequence.
+ */
+
+ENTRY(_stub_start);
+
+PHDRS {
+  text PT_LOAD;
+}
+
+SECTIONS {
+	.text 0x01D00000: {
+		*(.text)
+		*(.text.*)
+	} :text
+
+	.rodata ALIGN(16): {
+		*(.rodata)
+		*(.rodata.*)
+	}
+
+	.data ALIGN(16): {
+		*(.data)
+		*(.data.*)
+	}
+
+	_gp = ALIGN(16) + 0x7ff0;
+
+	.sdata ALIGN(16): {
+		*(.sdata)
+		*(.sdata.*)
+	}
+
+	.sbss ALIGN(16) : {
+		_fbss = .;
+		*(.sbss)
+		*(.sbss.*)
+		*(.scommon)
+	}
+
+	.bss ALIGN(16) : {
+		*(.bss)
+		*(.bss.*)
+		*(COMMON)
+	}
+
+	_end = .;
+
+	PROVIDE(_stack = -1);
+	PROVIDE(_stack_size = 128 * 1024);
+	PROVIDE(_heap_size = -1);
+}
