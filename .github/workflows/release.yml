@@ -75,3 +75,7 @@ jobs:
         with:
           files: artifacts/*.zip
           fail_on_unmatched_files: true
+      - name: Update manifest
+        env:
+          GH_TOKEN: ${{ secrets.MANIFEST_DISPATCH_TOKEN }}
+        run: gh api repos/ps2build/manifest/dispatches -f event_type=component-released
